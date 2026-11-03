@@ -1,4 +1,7 @@
 # enterprise-rag-gateway
+
+[![Python](https://img.shields.io/badge/python-%E2%89%A53.10-3776AB)](https://www.python.org/) [![License](https://img.shields.io/badge/license-MIT-7A8796)](#license) [![Version](https://img.shields.io/badge/v-0.1.0-555555)]() [![Tests](https://img.shields.io/badge/tests-34_passing-43853D)]()
+
 > 私有化企业 RAG 网关｜带细粒度权限、多租户、审计、敏感过滤的 B 端知识库检索网关
 
 > 属于【enterprise-ai-stack】B端私有化 AI 交付底座合集
@@ -64,6 +67,18 @@ curl -s localhost:8000/query -H 'Content-Type: application/json' \
 curl -s localhost:8000/sync -H 'Content-Type: application/json' \
   -d '{"documents":[{"id":"doc-900","tenant_id":"corp","title":"差旅制度","content":"住宿上限500元/晚","allowed_roles":[],"allowed_orgs":[]}]}'
 ```
+
+## 真实运行效果（`make demo` 真实输出，节选）
+```text
+Q: 涉密文件的借阅要求？    角色: hr（白名单内）
+命中: 涉密文件借阅制度 等 4 篇    敏感词: 3 处
+回答: ██文件借阅须部门负责人审批… ██结构由基本工资…（敏感词遮罩）
+
+Q: 涉密文件的借阅要求？    角色: prod（无 hr/national）
+命中: 费用报销制度；安全生产管理制度；年假管理制度
+→ 涉密制度在「召回阶段」被权限过滤，越权片段根本不进上下文
+```
+**先控权限、再做问答**：租户隔离 + 文档级权限在召回阶段生效，敏感词自动遮罩、无命中不编造。
 
 ## 核心接口
 | 方法 | 路径 | 说明 |
