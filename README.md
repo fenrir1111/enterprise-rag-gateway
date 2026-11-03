@@ -80,6 +80,39 @@ Q: 涉密文件的借阅要求？    角色: prod（无 hr/national）
 ```
 **先控权限、再做问答**：租户隔离 + 文档级权限在召回阶段生效，敏感词自动遮罩、无命中不编造。
 
+## 系统实拍（真实运行截图）
+
+以下截图均为**本仓库真实运行**产出（`make ui` 起控制台 + `make demo` 跑全链路），未经修饰。
+
+### 1. 问答 · 敏感词自动遮罩
+
+提问「报销流程需要几级审批？」，身份选 `national（运营部）`——注意回答里 `██文件借阅…` 是**敏感词被遮罩**，不是乱码：
+
+![RAG 问答与敏感词遮罩](docs/screenshots/rag-gateway-01-query.png)
+
+### 2. 文档权限 · 谁能看哪篇文档
+
+每篇文档的 `public` / `allowed_roles` / `allowed_orgs` 白名单一目了然，**越权文档在召回阶段就被过滤，根本不进上下文**：
+
+![文档权限配置](docs/screenshots/rag-gateway-02-doc-permission.png)
+
+### 3. 审计日志
+
+每次问答的租户、身份、命中文档、敏感词计数全部留痕：
+
+![审计日志](docs/screenshots/rag-gateway-03-audit.png)
+
+### 4. `make demo` 终端输出
+
+```text
+Q   : 涉密文件的借阅要求？
+角色 : hr   说明 : 角色 hr 命中白名单 → 可见
+状态 : ok  命中 4  敏感词 3 处
+回答 : ██文件借阅须部门负责人审批，且仅限本人阅读，不得复印或外传。…
+```
+
+![make demo 终端输出](docs/screenshots/enterprise-rag-gateway-demo-terminal.png)
+
 ## 核心接口
 | 方法 | 路径 | 说明 |
 |---|---|---|
