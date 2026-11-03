@@ -1,0 +1,34 @@
+[project]
+name = "enterprise-rag-gateway"
+version = "0.1.0"
+description = "私有化企业RAG网关｜多租户隔离 + 文档级细粒度权限 + 增量同步 + 向量召回/重排 + 审计 + 敏感过滤"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "FDE阿泽" }]
+keywords = ["rag", "enterprise-ai", "privacy-ai", "multitenancy", "field-delivery", "b端"]
+dependencies = [
+  "fastapi>=0.110,<0.116",
+  "uvicorn>=0.29",
+  "pydantic>=2.6",
+  "pydantic-settings>=2.2",
+  "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+# 可选：LLM 生成回答（不装 litellm 时走抽取式回答，离线可跑）
+llm = ["litellm>=1.40"]
+# 可选：轻量可视化后台
+ui = ["streamlit>=1.35"]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rag_gateway"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

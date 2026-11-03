@@ -1,0 +1,56 @@
+{
+  "tenants": [
+    {"id": "corp", "name": "企业制度知识库"},
+    {"id": "project", "name": "项目资料库"}
+  ],
+  "documents": [
+    {
+      "id": "doc-001",
+      "tenant_id": "corp",
+      "title": "费用报销制度",
+      "content": "报销流程需要三级审批，依次为部门审批、财务审批、主管审批。单笔超过五万元需附加预算依据，逾期提交需说明原因。",
+      "allowed_roles": [],
+      "allowed_orgs": []
+    },
+    {
+      "id": "doc-002",
+      "tenant_id": "corp",
+      "title": "年假管理制度",
+      "content": "员工年假天数按司龄计算，累计最多 15 天。年假可跨年度使用，但需提前两周申请并经部门批准。",
+      "allowed_roles": [],
+      "allowed_orgs": []
+    },
+    {
+      "id": "doc-003",
+      "tenant_id": "corp",
+      "title": "涉密文件借阅制度",
+      "content": "涉密文件借阅须部门负责人审批，且仅限本人阅读，不得复印或外传。借阅记录纳入保密审计台账。",
+      "allowed_roles": ["hr", "national"],
+      "allowed_orgs": []
+    },
+    {
+      "id": "doc-004",
+      "tenant_id": "corp",
+      "title": "薪酬管理制度",
+      "content": "薪酬结构由基本工资、绩效奖金、岗位津贴构成。薪酬数据按季度核算，发放前需财务复核并存档。",
+      "allowed_roles": ["hr"],
+      "allowed_orgs": []
+    },
+    {
+      "id": "doc-005",
+      "tenant_id": "corp",
+      "title": "安全生产管理制度",
+      "content": "安全生产实行分级管控，作业前需进行风险辨识与作业许可。特种作业人员须持证上岗，每月开展一次安全巡检。",
+      "allowed_roles": [],
+      "allowed_orgs": ["生产部"]
+    },
+    {
+      "id": "doc-101",
+      "tenant_id": "project",
+      "title": "项目验收标准",
+      "content": "项目验收需满足功能、性能、安全三项指标。验收前需完成全部测试用例并出具验收报告。",
+      "allowed_roles": [],
+      "allowed_orgs": []
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+.pytest_cache/
+.pytest-tmp/
+
+# 运行产物（审计日志）
+data/audit.log
+
+# 本地环境
+.env

@@ -1,0 +1,32 @@
+services:
+  rag-gateway:
+    build: .
+    container_name: enterprise-rag-gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - CORPUS_PATH=./data/corpus.json
+      - AUDIT_LOG_PATH=./data/audit.log
+      - TOP_K=5
+      - RERANK=false
+      # LLM 可选：不配置则走抽取式回答（离线可跑）
+      - LLM_ENABLED=false
+      - LLM_MODEL=gpt-4o-mini
+      - LLM_API_BASE=
+      - LLM_API_KEY=
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+
+  # 可选：对接 LiteLLM 网关后，把 LLM_ENABLED 置 true、LLM_API_BASE 指向该网关
+  # lite-llm:
+  #   image: ghcr.io/berriai/litellm:main-latest
+  #   ports:
+  #     - "4000:4000"
+  #   environment:
+  #     - LITELLM_MASTER_KEY=sk-rag
