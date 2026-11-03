@@ -2,7 +2,7 @@
 > 私有化企业 RAG 网关｜带细粒度权限、多租户、审计、敏感过滤的 B 端知识库检索网关
 
 > 属于【enterprise-ai-stack】B端私有化 AI 交付底座合集
-> 👉 总入口：https://github.com/你的用户名/enterprise-ai-stack
+> 👉 总入口：https://github.com/fenrir1111/enterprise-ai-stack
 
 ## 一句话简介
 面向政企内网知识库交付，解决普通 RAG「缺少租户隔离、文档权限、审计留痕、数据合规」的痛点；
