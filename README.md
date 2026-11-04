@@ -7,6 +7,12 @@
 > 属于【enterprise-ai-stack】B端私有化 AI 交付底座合集
 > 👉 总入口：https://github.com/fenrir1111/enterprise-ai-stack
 
+## 🚀 运行效果（真实截图）
+
+提问「报销流程需要几级审批？」→ 命中文档、敏感词自动 `██` 遮罩，**越权文档在召回阶段就被过滤，根本不进上下文**：
+
+![enterprise-rag-gateway 问答控制台 · 真实运行](docs/screenshots/rag-gateway-01-query.png)
+
 ## 一句话简介
 面向政企内网知识库交付，解决普通 RAG「缺少租户隔离、文档权限、审计留痕、数据合规」的痛点；
 对接 OA / 文件中心增量同步，可对接任意 LLM 后端（OneAPI / LiteLLM），**数据不出域**。
@@ -86,9 +92,7 @@ Q: 涉密文件的借阅要求？    角色: prod（无 hr/national）
 
 ### 1. 问答 · 敏感词自动遮罩
 
-提问「报销流程需要几级审批？」，身份选 `national（运营部）`——注意回答里 `██文件借阅…` 是**敏感词被遮罩**，不是乱码：
-
-![RAG 问答与敏感词遮罩](docs/screenshots/rag-gateway-01-query.png)
+提问「报销流程需要几级审批？」，身份选 `national（运营部）`——注意回答里 `██文件借阅…` 是**敏感词被遮罩**，不是乱码（见文首「🚀 运行效果」）：
 
 ### 2. 文档权限 · 谁能看哪篇文档
 
