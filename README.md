@@ -31,11 +31,20 @@
 7. **Prompt 版本管理**（可租户独立配置），容器化一键离线部署。
 
 ## 架构简图
+
+![enterprise-rag-gateway 架构图](docs/enterprise-rag-gateway-architecture.png)
+
+<details>
+<summary>文本版架构简图</summary>
+
 ```
 文档中心/OA → 同步服务(增量+对账) → 分块向量化(带权限标签) → 向量库(租户隔离)
 用户请求 → 身份鉴权 → 权限过滤召回 → Rerank(可选) → LLM生成(可选)/抽取式
         → 敏感过滤 → 水印 → 返回 & 审计落库
 ```
+
+</details>
+
 
 ## 快速启动
 ### 方式一：uv（推荐，本地）
@@ -179,6 +188,7 @@ make demo    # 全链路 demo
 
 ## 参与共建
 欢迎提交 Issue（反馈 bug、补充行业语料/敏感词表）、PR（适配向量库、OA 适配器）。有效贡献在 README 致谢栏署名。
+详细流程见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ## License
 MIT License，可自由使用、二次修改、商用；当前为 v0 版本，生产使用请自行评估风险。
