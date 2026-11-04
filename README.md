@@ -13,6 +13,12 @@
 
 ![enterprise-rag-gateway 问答控制台 · 真实运行](docs/screenshots/rag-gateway-01-query.png)
 
+## 🎬 一条命令跑通（真实终端录制）
+
+`make demo` 一条命令跑通全链路（**真实终端录制**，非模拟）：语料同步 → 检索 → 敏感词遮罩 → 召回阶段权限过滤 → 审计：
+
+![enterprise-rag-gateway 一条命令跑通 · 真实终端录制](docs/quickstart.gif)
+
 ## 一句话简介
 面向政企内网知识库交付，解决普通 RAG「缺少租户隔离、文档权限、审计留痕、数据合规」的痛点；
 对接 OA / 文件中心增量同步，可对接任意 LLM 后端（OneAPI / LiteLLM），**数据不出域**。
@@ -84,6 +90,9 @@ curl -s localhost:8000/sync -H 'Content-Type: application/json' \
 ```
 
 ## 真实运行效果（`make demo` 真实输出，节选）
+
+> 想看**动画版**（真实终端逐行录制）见文首「🎬 一条命令跑通」。
+
 ```text
 Q: 涉密文件的借阅要求？    角色: hr（白名单内）
 命中: 涉密文件借阅制度 等 4 篇    敏感词: 3 处
