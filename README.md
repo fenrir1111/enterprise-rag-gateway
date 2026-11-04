@@ -1,6 +1,6 @@
 # enterprise-rag-gateway
 
-[![Python](https://img.shields.io/badge/python-%E2%89%A53.10-3776AB)](https://www.python.org/) [![License](https://img.shields.io/badge/license-MIT-7A8796)](#license) [![Version](https://img.shields.io/badge/v-0.1.0-555555)]() [![Tests](https://img.shields.io/badge/tests-34_passing-43853D)]()
+[![Python](https://img.shields.io/badge/python-%E2%89%A53.10-3776AB)](https://www.python.org/) [![License](https://img.shields.io/badge/license-MIT-7A8796)](#license) [![Version](https://img.shields.io/badge/v-0.1.0-555555)]() [![Tests](https://img.shields.io/badge/tests-36_passing-43853D)]() [![CI](https://github.com/fenrir1111/enterprise-rag-gateway/actions/workflows/ci.yml/badge.svg)](https://github.com/fenrir1111/enterprise-rag-gateway/actions/workflows/ci.yml)
 
 > 私有化企业 RAG 网关｜带细粒度权限、多租户、审计、敏感过滤的 B 端知识库检索网关
 
@@ -131,6 +131,28 @@ Q   : 涉密文件的借阅要求？
 - **对接 OA / 文件中心**：写适配器拉取文档列表 + 内容 + 权限元数据，封装成 `Document` 调 `sync_corpus`，示例见 [`examples/sync_adapter_example.py`](examples/sync_adapter_example.py)。
 - **接真实向量库**：把 `embedding` 接口替换为真实向量模型、`retrieval` 换成 pgvector 查询即可（接口不变）。
 - **接 LLM**：配置 `LLM_ENABLED=true` + `LLM_API_BASE/KEY`（兼容 LiteLLM/OneAPI）。
+
+## CI 与质量门禁
+
+每次 push / PR 自动跑 [GitHub Actions](https://github.com/fenrir1111/enterprise-rag-gateway/actions/workflows/ci.yml)（Python 3.10 + 3.12 双版本矩阵）：
+
+| 环节 | 检查内容 |
+|---|---|
+| 单元测试 | `pytest` 全量（含 Streamlit 控制台冒烟，捕获脚本被当独立模块执行时的 ImportError） |
+| demo 冒烟 | `python -m rag_gateway.demo` 全链路跑通，退出码必须为 0 |
+| FastAPI 冒烟 | 起 `uvicorn` 并请求 `/health`，30s 内未就绪即失败 |
+| Streamlit 冒烟 | 起控制台并请求 `/_stcore/health`，30s 内未就绪即失败 |
+
+> 其中 `tests/test_streamlit_app.py` 用 Streamlit 官方 `AppTest` **真正执行一遍页面脚本**：
+> Streamlit 是把 `streamlit_app.py` 当独立脚本跑的（没有 `__package__`），
+> 一旦脚本里用了相对导入就会直接 `ImportError`，但页面仍返回 HTTP 200 —— 只有真跑一遍才发现得了。
+
+本地复现：
+
+```bash
+make test    # 单元测试 + 控制台冒烟
+make demo    # 全链路 demo
+```
 
 ## 设计原则
 - **召回阶段过滤权限**，而非回答后过滤：无权限 chunk 不进上下文，从源头截断泄露。
